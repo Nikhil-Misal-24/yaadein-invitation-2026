@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Yaadein '26 | The Farewell Celebration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-deep: #02040f;
+            --bg-mid: #060b1a;
+            --gold: #f59e0b;
+            --gold-dark: #b45309;
+        }
+ 
+        *, *::before, *::after { box-sizing: border-box; }
+ 
+        html { scroll-behavior: smooth; }
+ 
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #030712;
+            color: white;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+ 
+        .serif-elite { font-family: 'Cinzel', serif; }
+        .literary-subtext { font-family: 'Cormorant Garamond', serif; }
+        .text-gold { color: #f59e0b; }
+ 
+        /* ==========================================
+           SCROLLBAR
+        ========================================== */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #02040f; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #b45309, #f59e0b);
+            border-radius: 3px;
+        }
+ 
+        /* ==========================================
+           ANIMATIONS
+        ========================================== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(16,185,129,0.6); }
+            50% { box-shadow: 0 0 18px rgba(16,185,129,0.9); }
+        }
+ 
+        .animate-fade-in { animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .stagger-1 { animation-delay: 0.2s; opacity: 0; animation-fill-mode: forwards; }
+        .stagger-2 { animation-delay: 0.4s; opacity: 0; animation-fill-mode: forwards; }
+        .stagger-3 { animation-delay: 0.6s; opacity: 0; animation-fill-mode: forwards; }
+ 
+        /* ==========================================
+           REVEAL ON SCROLL
+        ========================================== */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+ 
+        /* ==========================================
+           GOLD SHIMMER TEXT
+        ========================================== */
+        .gold-text-shimmer {
+            background: linear-gradient(90deg, #fff 0%, #f59e0b 25%, #fff 50%, #f59e0b 75%, #fff 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 6s linear infinite;
+        }
+ 
+        /* ==========================================
+           GOLD BUTTON
+        ========================================== */
+        .gold-gradient-btn {
+            background: linear-gradient(135deg, #d97706 0%, #f59e0b 50%, #b45309 100%);
+            background-size: 200% auto;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-block;
+        }
+        .gold-gradient-btn:hover {
+            background-position: right center;
+            transform: scale(1.03);
+            box-shadow: 0 15px 30px -6px rgba(217,119,6,0.4);
+        }
+        .gold-gradient-btn:active { transform: scale(0.95); filter: brightness(0.85); }
+ 
+        /* ==========================================
+           BACKGROUND GLOW
+        ========================================== */
+        .oriel-glow-top {
+            position: fixed;
+            width: min(800px, 100vw);
+            height: min(800px, 100vw);
+            background: radial-gradient(circle, rgba(245,158,11,0.06) 0%, rgba(3,7,18,0) 70%);
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+ 
+        /* ==========================================
+           FACULTY CARD
+        ========================================== */
+        .enhanced-faculty-card {
+            position: relative;
+            background: rgba(15, 23, 42, 0.45);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(245, 158, 11, 0.08);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1;
+            cursor: pointer;
+        }
+        .enhanced-faculty-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent 20%, rgba(245,158,11,0.4) 50%, transparent 80%);
+            animation: rotateBorder 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -2;
+        }
+        .enhanced-faculty-card::after {
+            content: '';
+            position: absolute;
+            inset: 1px;
+            background: linear-gradient(135deg, rgba(10,15,30,0.95) 0%, rgba(17,24,39,0.85) 100%);
+            border-radius: 15px;
+            z-index: -1;
+            transition: background 0.4s ease;
+        }
+        .enhanced-faculty-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 60px -15px rgba(245,158,11,0.12);
+        }
+        .enhanced-faculty-card:hover::before { opacity: 1; }
+        .enhanced-faculty-card:hover .card-cta {
+            color: #f59e0b;
+            letter-spacing: 0.3em;
+        }
+        .enhanced-faculty-card:hover::after {
+            background: linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(24,34,54,0.9) 100%);
+        }
+ 
+        /* ==========================================
+           AVATAR
+        ========================================== */
+        .avatar-glow-wrapper {
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            flex-shrink: 0;
+        }
+        .enhanced-faculty-card:hover .avatar-glow-wrapper {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(245,158,11,0.25);
+            border-color: rgba(245,158,11,0.6) !important;
+        }
+ 
+        /* ==========================================
+           MODAL
+        ========================================== */
+        .modal-overlay-blur {
+            background-color: rgba(3, 7, 18, 0.3);
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay-blur.active {
+            background-color: rgba(2, 6, 23, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .pop-card-mechanic {
+            opacity: 0;
+            transform: scale(0.92) translateY(30px);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .pop-card-mechanic.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+ 
+        /* ==========================================
+           ROYAL FRAME
+        ========================================== */
+        .royal-frame {
+            border: 1px solid rgba(245,158,11,0.2);
+            outline: 1px solid rgba(245,158,11,0.08);
+            outline-offset: -6px;
+            position: relative;
+        }
+        .frame-corner {
+            position: absolute;
+            width: 12px; height: 12px;
+            border: 1.5px solid #f59e0b;
+            z-index: 10;
+        }
+ 
+        /* ==========================================
+           FOOTER
+        ========================================== */
+        .footer-glow { position: relative; }
+        .footer-glow::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 300px; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(245,158,11,0.5), transparent);
+        }
+ 
+        /* ==========================================
+           CURSOR (desktop only)
+        ========================================== */
+        .cursor-dot {
+            position: fixed;
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: #f59e0b;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 6px rgba(245,158,11,0.8);
+        }
+        .cursor-trail {
+            position: fixed;
+            border-radius: 50%;
+            background: rgba(245,158,11,0.55);
+            pointer-events: none;
+            z-index: 9998;
+            filter: blur(1px);
+            width: 8px; height: 8px;
+        }
+ 
+        /* ==========================================
+           RESPONSIVE FIXES
+        ========================================== */
+ 
+        /* Hero section */
+        .hero-badge {
+            font-size: clamp(8px, 2vw, 10px);
+            padding: 6px 14px;
+            letter-spacing: 0.3em;
+            white-space: normal;
+            text-align: center;
+            word-break: break-word;
+        }
+ 
+        .hero-title {
+            font-size: clamp(2rem, 8vw, 5rem);
+            letter-spacing: clamp(0.1em, 2vw, 0.25em);
+        }
+ 
+        .hero-quote {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+        }
+ 
+        /* Info bar */
+        .info-bar-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px 16px;
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            .info-bar-grid {
+                grid-template-columns: repeat(4, 1fr);
+                text-align: left;
+            }
+        }
+ 
+        /* Faculty grid */
+        .faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        @media (min-width: 640px) {
+            .faculty-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        }
+        @media (min-width: 900px) {
+            .faculty-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        }
+        @media (min-width: 1200px) {
+            .faculty-grid { grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        }
+ 
+        /* Card padding responsive */
+        .faculty-card-inner {
+            padding: clamp(12px, 3vw, 24px);
+        }
+ 
+        /* Avatar responsive */
+        .avatar-size {
+            width: clamp(60px, 12vw, 96px);
+            height: clamp(60px, 12vw, 96px);
+        }
+ 
+        /* Card text responsive */
+        .card-name { font-size: clamp(11px, 2.5vw, 15px); }
+        .card-role { font-size: clamp(8px, 1.5vw, 10px); }
+        .card-quote { font-size: clamp(10px, 2vw, 14px); }
+        .card-badge { font-size: clamp(7px, 1.5vw, 9px); padding: 2px 8px; }
+        .card-cta { font-size: clamp(7px, 1.5vw, 9px); }
+ 
+        /* Modal responsive */
+        .modal-inner {
+            width: 95vw;
+            max-width: 680px;
+            max-height: 92vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .modal-inner::-webkit-scrollbar { width: 3px; }
+        .modal-inner::-webkit-scrollbar-thumb { background: rgba(245,158,11,0.3); border-radius: 2px; }
+ 
+        .modal-padding {
+            padding: clamp(16px, 4vw, 40px);
+        }
+ 
+        /* Modal text responsive */
+        .modal-title { font-size: clamp(1.3rem, 5vw, 2.5rem); }
+        .modal-quote { font-size: clamp(0.9rem, 2.5vw, 1.1rem); }
+ 
+        /* Signature canvas */
+        #signature-matrix-pad {
+            width: 100%;
+            height: 88px;
+        }
+ 
+        /* Mobile: hide cursor trail */
+        @media (pointer: coarse) {
+            .cursor-dot, .cursor-trail { display: none !important; }
+        }
+ 
+        /* Section headings */
+        .section-heading { font-size: clamp(1.5rem, 5vw, 3rem); }
+ 
+        /* Hero icon */
+        .hero-icon-wrap {
+            width: clamp(56px, 14vw, 80px);
+            height: clamp(56px, 14vw, 80px);
+        }
+        .hero-icon { width: clamp(32px, 8vw, 48px); height: clamp(32px, 8vw, 48px); }
+ 
+        /* Fix overflow on small screens */
+        section, footer { overflow-x: hidden; }
+ 
+        /* Info bar dividers mobile */
+        @media (max-width: 767px) {
+            .info-divider { display: none; }
+        }
+ 
+        /* Animate pulse for live dot */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+ 
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+ 
+<body class="text-slate-300 antialiased relative">
+ 
+    <!-- Cursor (desktop) -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-trail" id="cursor-trail-1"></div>
+    <div class="cursor-trail" id="cursor-trail-2" style="width:14px;height:14px;background:rgba(245,158,11,0.28);filter:blur(2px)"></div>
+    <div class="cursor-trail" id="cursor-trail-3" style="width:22px;height:22px;background:rgba(245,158,11,0.12);filter:blur(4px)"></div>
+ 
+    <div class="oriel-glow-top"></div>
+ 
+    <!-- ==================== HERO ==================== -->
+    <section class="min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 relative overflow-hidden py-16">
+        <div class="text-center max-w-4xl w-full space-y-4 sm:space-y-6 z-10 animate-fade-in">
+ 
+            <div class="hero-icon-wrap mx-auto flex items-center justify-center border border-amber-500/20 rounded-full bg-amber-500/[0.02]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="#f59e0b" class="hero-icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0012 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75z" />
+                </svg>
+            </div>
+ 
+            <div class="flex flex-col items-center gap-2">
+                <p class="hero-badge text-amber-500 font-bold uppercase bg-amber-500/5 rounded-full border border-amber-500/10 inline-block">
+                    A Farewell Celebration &bull; Batch of 2026
+                </p>
+                <p class="hero-badge text-amber-500 font-bold uppercase bg-amber-500/5 rounded-full border border-amber-500/10 inline-block">
+                    Organised by Department of Electronics and Communication Engineering
+                </p>
+            </div>
+ 
+            <h1 class="serif-elite hero-title font-light tracking-widest text-white leading-tight">
+                YAADEIN <span class="gold-text-shimmer font-semibold">'26</span>
+            </h1>
+ 
+            <div class="w-20 h-[1px] bg-gradient-to-r from-transparent via-amber-500/40 to-transparent mx-auto my-4"></div>
+ 
+            <p class="literary-subtext hero-quote text-slate-400 italic max-w-2xl mx-auto font-light leading-relaxed px-2">
+                "Honorable Faculty Members, your intellectual guardianship has sculpted our aspirations. We solicit the gratification of your presence to commemorate our final convocation walk."
+            </p>
+ 
+            <div class="pt-6 animate-fade-in stagger-1">
+                <a href="#faculty-registry" class="px-7 sm:px-10 py-3.5 sm:py-4 rounded-md gold-gradient-btn text-slate-950 font-bold tracking-[0.15em] sm:tracking-[0.2em] text-xs uppercase shadow-xl">
+                    Access Formal Invitation ↓
+                </a>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- ==================== INFO BAR ==================== -->
+    <section class="py-8 sm:py-10 bg-slate-950/60 backdrop-blur-xl border-y border-slate-900 relative z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="info-bar-grid">
+ 
+                <div class="space-y-1">
+                    <span class="text-[9px] text-amber-500 font-bold uppercase tracking-widest block opacity-70">Protocol Title</span>
+                    <p class="text-white text-sm sm:text-base font-medium">YAADEIN '26</p>
+                </div>
+ 
+                <div class="space-y-1">
+                    <span class="text-[9px] text-amber-500 font-bold uppercase tracking-widest block opacity-70">Date</span>
+                    <p class="text-white text-sm sm:text-base font-medium">9th June 2026, Tuesday</p>
+                </div>
+ 
+                <div class="space-y-1">
+                    <span class="text-[9px] text-amber-500 font-bold uppercase tracking-widest block opacity-70">Temporal Schedule</span>
+                    <p class="text-slate-400 text-xs">Lunch: <span class="text-white font-medium">02:00 – 03:00 PM</span></p>
+                    <p class="text-slate-400 text-xs">Ceremony: <span class="text-amber-400 font-medium">03:00 – 06:00 PM</span></p>
+                </div>
+ 
+                <div class="space-y-1">
+                    <span class="text-[9px] text-amber-500 font-bold uppercase tracking-widest block opacity-70">Designated Venue</span>
+                    <p class="text-white text-sm sm:text-base font-medium">AI&DS AV Hall (1st Floor)</p>
+                </div>
+ 
+            </div>
+        </div>
+    </section>
+ 
+    <!-- ==================== FACULTY GRID ==================== -->
+    <section id="faculty-registry" class="py-20 sm:py-32 px-4 sm:px-6 max-w-7xl mx-auto relative z-10">
+ 
+        <div class="text-center space-y-3 mb-14 sm:mb-24 animate-fade-in stagger-2">
+            <h2 class="serif-elite section-heading text-white tracking-widest">The Faculty Members</h2>
+            <p class="literary-subtext text-slate-400 text-base sm:text-lg italic">Select your respective profile to reveal the encrypted token of invitation.</p>
+        </div>
+ 
+        <div class="faculty-grid animate-fade-in stagger-3">
+ 
+            <!-- Card macro -->
+            <!-- Dr. Jyoti Deshmukh -->
+            <div onclick="executeModalLaunch('Dr. Jyoti Deshmukh','Group Director','Sagar Group of Institutions','Thank you for shaping an environment where knowledge meets innovation and potential meets opportunity. Your visionary leadership continues to inspire generations of learners and achievers.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="dr-jyoti-deshmukh.webp" alt="Dr. Jyoti Deshmukh" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Group Director</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Dr. Jyoti Deshmukh</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Group Director</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"Your commitment to education has transformed aspirations into achievements."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Dr. Manish Billore -->
+            <div onclick="executeModalLaunch('Dr. Manish Billore','Principal','SISTec GN','Thank you for shaping an environment where knowledge meets innovation and potential meets opportunity. Your visionary leadership continues to inspire generations of learners and achievers.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="dr-manish-billore.webp" alt="Dr. Manish Billore" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Principal</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Dr. Manish Billore</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Principal, SISTec GN</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"Your vision gave us direction; your leadership gave us confidence."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Dr. Kuldeep Ganju -->
+            <div onclick="executeModalLaunch('Dr. Kuldeep Ganju','Principal','SIPTec GN','Thank you, Sir, for your visionary leadership and for always being a great mentor to all of us.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="kuldeep.webp" alt="Dr. Kuldeep Ganju" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Principal</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Dr. Kuldeep Ganju</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Principal, SIPTec GN</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"Your mentorship taught us the art of resilience and the right mindset."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Dr. Swati Saxena -->
+            <div onclick="executeModalLaunch('Dr. Swati Saxena','Vice Principal','SISTec GN','Thank you for your unwavering support, academic leadership, and commitment to student success. Your encouragement and dedication have been a constant source of inspiration throughout our journey.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="dr-swati-saxena.webp" alt="Dr. Swati Saxena" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Vice Principal</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Dr. Swati Saxena</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Vice Principal, SISTec GN</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"Your guidance taught us discipline, your encouragement inspired excellence."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Mr. B.S. Kushwah -->
+            <div onclick="executeModalLaunch('Mr. B.S. Kushwah','Administrator','SISTec GN','Thank you for your tireless dedication and steadfast support in creating a nurturing campus environment. Your commitment behind the scenes has made countless student experiences possible.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="b-s-kushwah.webp" alt="Mr. B.S. Kushwah" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Administrator</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Mr. B.S. Kushwah</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Administrator, SISTec GN</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"Your dedication ensured that every day on campus ran smoothly and meaningfully."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Prof. Rahul Shrivastava -->
+            <div onclick="executeModalLaunch('Prof. Rahul Shrivastava','Head of Department','ECE Department','Thank you, Sir, for your visionary leadership and for always being a great mentor to all of us.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="rahulsir1.png.jpeg" alt="Prof. Rahul Shrivastava" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">HOD</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Prof. Rahul Shrivastava</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Head of Department, ECE</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"Thank you, Sir, for your visionary leadership and for always being a great mentor."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Dr. Sachin Kalraiya -->
+            <div onclick="executeModalLaunch('Dr. Sachin Kalraiya','Associate Professor','ECE Department','Your strategic guidance during our breakthroughs redefined our foundation, and we are honored to have your wisdom remain our constant compass in every professional endeavor.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="sachinsir.jpg" alt="Dr. Sachin Kalraiya" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Associate Professor</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Dr. Sachin Kalraiya</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Associate Professor</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"Your strategic guidance redefined our foundation and remains our constant compass."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Prof. Anoop Tiwari -->
+            <div onclick="executeModalLaunch('Prof. Anoop Tiwari','Assistant Professor','ECE Department','Your mentorship is our greatest source of inspiration; you not only guide our every step but consistently motivate us to push our boundaries and excel in every endeavor.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="anoopsir.png" alt="Prof. Anoop Tiwari" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Assistant Professor</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Prof. Anoop Tiwari</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Assistant Professor</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"Your mentorship is our greatest source of inspiration and motivation."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Prof. Siddharth Singh Parihar -->
+            <div onclick="executeModalLaunch('Prof. Siddharth Singh Parihar','Assistant Professor','ECE Department','Your mentorship has been more than just technical guidance; you taught us the art of resilience, proving that with the right mindset, every challenge is an opportunity to excel.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="siddharthsir.png" alt="Prof. Siddharth Singh Parihar" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Assistant Professor</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Prof. Siddharth Singh Parihar</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Assistant Professor</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"You taught us that every challenge is an opportunity to excel."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Dr. Pramod Kumar Patel -->
+            <div onclick="executeModalLaunch('Dr. Pramod Kumar Patel','Professor','ECE Department','Your strategic coordination, absolute mentorship during key research breakthroughs, and technical support redefined our foundation.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="prmodsir.png" alt="Dr. Pramod Kumar Patel" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Professor</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Dr. Pramod Kumar Patel</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Professor</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"Your strategic coordination and mentorship redefined our foundation."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Prof. Meha Shrivastava -->
+            <div onclick="executeModalLaunch('Prof. Meha Shrivastava','Assistant Professor','ECE Department','Your mentorship has been the driving force behind our growth; you taught us that progress is a continuous journey and constantly inspired us to rise above every milestone.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="mehamam.png" alt="Prof. Meha Shrivastava" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Assistant Professor</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Prof. Meha Shrivastava</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Assistant Professor</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"You taught us that progress is a continuous journey and inspired us to rise."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Prof. Deepti Malviya -->
+            <div onclick="executeModalLaunch('Prof. Deepti Malviya','Assistant Professor','ECE Department','Your mentorship went beyond the classroom; your unwavering support through every challenge and your belief in us when we faltered gave us the strength to keep going.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="deeptimam.png" alt="Prof. Deepti Malviya" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Assistant Professor</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Prof. Deepti Malviya</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Assistant Professor</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"Your belief in us when we faltered gave us the strength to keep going."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Mr. Raju Malviya -->
+            <div onclick="executeModalLaunch('Mr. Raju Malviya','Professor','ECE Department','Your unwavering support has been the backbone of our achievements; indeed, every milestone we reached is a testament to your constant belief in our potential.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="rajusir" alt="Mr. Raju Malviya" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Assistant Professor</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Mr. Raju Malviya</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Professor</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"Every milestone we reached is a testament to your constant belief in our potential."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Prof. Deepa Gianchandani -->
+            <div onclick="executeModalLaunch('Prof. Deepa Gianchandani','Assistant Professor','ECE Department','Your mentorship has been truly transformative; you not only guided us but gave us an entirely new perspective to view the world, constantly motivating us to push beyond our limits.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="deepamam.jpg" alt="Prof. Deepa Gianchandani" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Assistant Professor</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Prof. Deepa Gianchandani</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Assistant Professor</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"You gave us an entirely new perspective to view the world and push our limits."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Prof. Md. Abdullah -->
+            <div onclick="executeModalLaunch('Prof. Md. Abdullah','Assistant Professor','ECE Department','Your strategic coordination, absolute mentorship during key research breakthroughs, and technical support redefined our foundation.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="abdulahsir.jpg" alt="Prof. Md. Abdullah" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Assistant Professor</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Prof. Md. Abdullah</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Assistant Professor</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"Your mentorship during key breakthroughs redefined our foundation."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+            <!-- Prof. Sharad Mohan Shrivastava -->
+            <div onclick="executeModalLaunch('Prof. Sharad Mohan Shrivastava','Senior Manager Corporate Relation','SISTec GN','Your mentorship went beyond the classroom; your unwavering support through every challenge and your belief in us when we faltered gave us the strength to keep going.')"
+                 class="enhanced-faculty-card faculty-card-inner flex flex-col items-center text-center group">
+                <div class="avatar-glow-wrapper avatar-size rounded-full border border-amber-500/20 mb-4 overflow-hidden flex items-center justify-center bg-slate-950">
+                    <img src="sharadsir.webp" alt="Prof. Sharad Mohan Shrivastava" class="w-full h-full object-cover">
+                </div>
+                <span class="card-badge text-amber-500 bg-amber-500/5 border border-amber-500/20 rounded-sm font-semibold tracking-widest uppercase transition-all duration-300 group-hover:bg-amber-400 group-hover:text-slate-950">Sr. Manager Corporate</span>
+                <h3 class="card-name font-semibold text-white mt-3 tracking-wide group-hover:text-amber-400 transition duration-300">Prof. Sharad M. Shrivastava</h3>
+                <p class="card-role text-slate-500 font-mono mt-1">Sr. Manager Corporate Relation</p>
+                <p class="literary-subtext card-quote text-slate-400 mt-3 italic line-clamp-2 px-1">"Your belief in us when we faltered gave us the strength to keep going."</p>
+                <div class="card-cta text-amber-500/50 font-bold mt-5 tracking-widest uppercase group-hover:text-amber-400 group-hover:translate-x-1 transition-all duration-300">REQUEST ACCESS →</div>
+            </div>
+ 
+        </div>
+    </section>
+ 
+    <!-- ==================== MODAL ==================== -->
+    <div id="portal-modal" class="fixed inset-0 hidden justify-center items-center z-50 p-3 sm:p-4 modal-overlay-blur" style="overflow-y:auto;">
+        <div id="modal-popup-card" class="modal-inner rounded-2xl relative pop-card-mechanic bg-slate-900/97 border border-slate-800/50 my-auto">
+            <div class="royal-frame rounded-[14px] modal-padding w-full h-full">
+                <div class="frame-corner top-2 left-2 border-r-0 border-b-0"></div>
+                <div class="frame-corner top-2 right-2 border-l-0 border-b-0"></div>
+                <div class="frame-corner bottom-2 left-2 border-r-0 border-t-0"></div>
+                <div class="frame-corner bottom-2 right-2 border-l-0 border-t-0"></div>
+ 
+                <button onclick="dismissModal()" 
+                        style="position:absolute;top:12px;right:12px;z-index:20;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(30,41,59,0.8);border:none;color:#94a3b8;font-size:18px;cursor:pointer;transition:all 0.2s;"
+                        onmouseover="this.style.color='white';this.style.background='rgba(51,65,85,0.9)'"
+                        onmouseout="this.style.color='#94a3b8';this.style.background='rgba(30,41,59,0.8)'">&times;</button>
+ 
+                <div id="modal-dynamic-injection"></div>
+            </div>
+        </div>
+    </div>
+ 
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="py-12 footer-glow relative z-10">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+            <div class="flex justify-center items-center gap-3 mb-6">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" style="animation:pulse 2s infinite;box-shadow:0 0 10px rgba(16,185,129,0.6);flex-shrink:0;"></span>
+                <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 font-mono">
+                    Designed &amp; Developed by Nikhil Misal
+                </span>
+            </div>
+            <h3 class="serif-elite text-xl sm:text-2xl font-bold text-white uppercase tracking-[0.2em] sm:tracking-[0.25em] mb-3">
+                YAADEIN <span class="gold-text-shimmer">'26</span>
+            </h3>
+            <p class="text-[10px] font-bold tracking-[0.3em] sm:tracking-[0.4em] text-slate-600 uppercase mb-8">
+                &copy; Copyright 2026, SISTec. All Rights Reserved.
+            </p>
+            <div class="w-24 h-[1.5px] mx-auto" style="background:linear-gradient(90deg,transparent,rgba(245,158,11,0.6),transparent);"></div>
+        </div>
+    </footer>
+ 
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+        /* ---- CURSOR TRAIL (desktop only) ---- */
+        function initCursorTrail() {
+            if (window.matchMedia('(pointer: coarse)').matches) return;
+            const dot = document.getElementById('cursor-dot');
+            const t1  = document.getElementById('cursor-trail-1');
+            const t2  = document.getElementById('cursor-trail-2');
+            const t3  = document.getElementById('cursor-trail-3');
+            if (!dot) return;
+ 
+            let mx = 0, my = 0;
+            let pos1 = {x:0,y:0}, pos2 = {x:0,y:0}, pos3 = {x:0,y:0};
+ 
+            document.addEventListener('mousemove', e => {
+                mx = e.clientX; my = e.clientY;
+                dot.style.left = mx - 2 + 'px';
+                dot.style.top  = my - 2 + 'px';
+            });
+ 
+            function animate() {
+                pos1.x += (mx - pos1.x) * 0.25; pos1.y += (my - pos1.y) * 0.25;
+                pos2.x += (mx - pos2.x) * 0.14; pos2.y += (my - pos2.y) * 0.14;
+                pos3.x += (mx - pos3.x) * 0.08; pos3.y += (my - pos3.y) * 0.08;
+                t1.style.left = pos1.x - 4  + 'px'; t1.style.top = pos1.y - 4  + 'px';
+                t2.style.left = pos2.x - 7  + 'px'; t2.style.top = pos2.y - 7  + 'px';
+                t3.style.left = pos3.x - 11 + 'px'; t3.style.top = pos3.y - 11 + 'px';
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+        window.addEventListener('DOMContentLoaded', initCursorTrail);
+ 
+        /* ---- MODAL STATE ---- */
+        let designatedFaculty = "", designatedTag = "", designatedDept = "", designatedDesc = "";
+        const overlay   = document.getElementById('portal-modal');
+        const popupCard = document.getElementById('modal-popup-card');
+        let writeState  = false;
+ 
+        function executeModalLaunch(name, tag, dept, desc) {
+            designatedFaculty = name;
+            designatedTag     = tag;
+            designatedDept    = dept;
+            designatedDesc    = desc;
+ 
+            overlay.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+ 
+            setTimeout(() => {
+                overlay.classList.add('active');
+                popupCard.classList.add('active');
+            }, 10);
+ 
+            compileModalPayload();
+        }
+ 
+        function dismissModal() {
+            overlay.classList.remove('active');
+            popupCard.classList.remove('active');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                document.body.style.overflow = '';
+            }, 400);
+        }
+ 
+        /* Close modal on overlay click (not card) */
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) dismissModal();
+        });
+ 
+        /* Close on Escape key */
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') dismissModal();
+        });
+ 
+        function compileModalPayload() {
+            document.getElementById('modal-dynamic-injection').innerHTML = `
+                <div class="text-center space-y-4">
+                    <p class="serif-elite text-[10px] uppercase tracking-[0.3em] text-amber-500/80">An Official Invitation</p>
+                    <h3 class="literary-subtext text-slate-400 text-sm sm:text-base italic">It is our distinct honor to cordially invite you to grace this occasion with your presence.</h3>
+ 
+                    <h2 class="serif-elite modal-title text-white font-medium tracking-wide">${designatedFaculty}</h2>
+                    <p class="text-[10px] font-mono tracking-widest text-amber-400 uppercase">${designatedTag} &bull; ${designatedDept}</p>
+ 
+                    <div class="w-16 h-[1px] bg-amber-500/20 mx-auto my-2"></div>
+ 
+                    <p class="literary-subtext modal-quote text-slate-300 italic max-w-xl mx-auto px-2 leading-relaxed">"${designatedDesc}"</p>
+ 
+                    <div class="my-3 mx-auto max-w-md p-4 rounded bg-amber-500/[0.02] border border-amber-500/10">
+                        <p class="literary-subtext text-base sm:text-lg text-amber-100/90 italic font-medium leading-relaxed">
+                            "Every moment spent under your guidance has been a profound lesson; every word you taught has shaped our approach to life and careers."
+                        </p>
+                    </div>
+ 
+                    <div class="w-full h-[1px] bg-slate-800/40 my-3"></div>
+ 
+                    <div class="text-left space-y-4">
+                        <h4 class="text-[10px] font-bold uppercase text-amber-500 tracking-wider">Attendance Confirmation</h4>
+ 
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="flex items-center gap-3 p-3 bg-slate-950/40 border border-slate-800 rounded-md cursor-pointer hover:border-emerald-500/30 transition duration-300">
+                                <input type="radio" name="clearance-status" value="Approved" class="accent-emerald-500 h-3.5 w-3.5 flex-shrink-0" checked>
+                                <div>
+                                    <p class="text-white font-medium text-xs tracking-wide">Accept Invitation</p>
+                                    <p class="text-[10px] text-slate-500 mt-0.5">Will attend the event in person.</p>
+                                </div>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 bg-slate-950/40 border border-slate-800 rounded-md cursor-pointer hover:border-rose-500/30 transition duration-300">
+                                <input type="radio" name="clearance-status" value="Declined" class="accent-rose-500 h-3.5 w-3.5 flex-shrink-0">
+                                <div>
+                                    <p class="text-white font-medium text-xs tracking-wide">Regretfully Decline</p>
+                                    <p class="text-[10px] text-slate-500 mt-0.5">Unable to attend in person.</p>
+                                </div>
+                            </label>
+                        </div>
+ 
+                        <div class="space-y-1.5">
+                            <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Message for Graduating Students</label>
+                            <textarea id="transmission-input-box" rows="2"
+                                placeholder="Input professional statements or blessings for the graduating batch..."
+                                style="width:100%;background:rgba(2,6,23,0.6);border:1px solid rgba(51,65,85,1);border-radius:6px;padding:10px 12px;font-size:12px;color:#e2e8f0;resize:none;outline:none;transition:border 0.2s;font-family:'Plus Jakarta Sans',sans-serif;"
+                                onfocus="this.style.borderColor='rgba(245,158,11,0.3)'"
+                                onblur="this.style.borderColor='rgba(51,65,85,1)'"></textarea>
+                        </div>
+ 
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center flex-wrap gap-2">
+                                <label class="block text-[10px] font-bold text-slate-400 uppercase tracking-wide">Digital Authentication / Validation Mark</label>
+                                <button onclick="purgeSignatureMatrix()" class="text-[10px] text-amber-500/60 hover:text-amber-400 transition underline font-mono">[Purge Pad]</button>
+                            </div>
+                            <div class="bg-slate-50 rounded-md overflow-hidden border border-slate-200">
+                                <canvas id="signature-matrix-pad" class="w-full cursor-crosshair" style="height:88px;display:block;touch-action:none;"></canvas>
+                            </div>
+                        </div>
+ 
+                        <button onclick="commitRegistryTransmission()"
+                            style="width:100%;padding:14px 0;border-radius:6px;background:linear-gradient(135deg,#d97706 0%,#f59e0b 50%,#b45309 100%);color:#0c0a09;font-weight:700;letter-spacing:0.15em;font-size:11px;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.3s;font-family:'Plus Jakarta Sans',sans-serif;"
+                            onmouseover="this.style.opacity='0.9'"
+                            onmouseout="this.style.opacity='1'">
+                            Transmit Validation Token
+                        </button>
+                    </div>
+                </div>`;
+ 
+            initializeSignatureMatrix();
+        }
+ 
+        function initializeSignatureMatrix() {
+            const canvas = document.getElementById('signature-matrix-pad');
+            if (!canvas) return;
+ 
+            /* Fit canvas to display size */
+            const rect = canvas.getBoundingClientRect();
+            canvas.width  = rect.width  || canvas.offsetWidth  || 500;
+            canvas.height = rect.height || canvas.offsetHeight || 88;
+ 
+            const ctx = canvas.getContext('2d');
+            ctx.strokeStyle = '#020617';
+            ctx.lineWidth   = 2.5;
+            ctx.lineCap     = 'round';
+            ctx.lineJoin    = 'round';
+ 
+            function getPos(e) {
+                const b = canvas.getBoundingClientRect();
+                const src = e.touches ? e.touches[0] : e;
+                return { x: (src.clientX - b.left) * (canvas.width / b.width),
+                         y: (src.clientY - b.top)  * (canvas.height / b.height) };
+            }
+ 
+            function onDown(e) { e.preventDefault(); writeState = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); }
+            function onMove(e) { if (!writeState) return; e.preventDefault(); const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); ctx.beginPath(); ctx.moveTo(p.x, p.y); }
+            function onUp()   { writeState = false; }
+ 
+            canvas.addEventListener('mousedown',  onDown,  {passive:false});
+            canvas.addEventListener('mousemove',  onMove,  {passive:false});
+            canvas.addEventListener('touchstart', onDown,  {passive:false});
+            canvas.addEventListener('touchmove',  onMove,  {passive:false});
+            window.addEventListener('mouseup',    onUp);
+            window.addEventListener('touchend',   onUp);
+        }
+ 
+        function purgeSignatureMatrix() {
+            const canvas = document.getElementById('signature-matrix-pad');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+ 
+        /* ---- GOOGLE SHEET API URL ---- */
+        const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzbpNMV1KX6quh5jiwLKR_32H6zayI8uCz-0CeSoxIFhgxFs_tSEBmMLVxDrsnrLOLk/exec";
+ 
+        /* ---- LOADING STATE UI ---- */
+        function showLoadingState(btn) {
+            btn.disabled = true;
+            btn.innerHTML = `<span style="display:inline-flex;align-items:center;gap:8px;">
+                <svg style="width:14px;height:14px;animation:spin 1s linear infinite;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                </svg>
+                Transmitting to Registry...
+            </span>`;
+        }
+ 
+        /* ---- SEND DATA TO GOOGLE SHEET via no-cors fetch ---- */
+        async function sendToGoogleSheet(payload) {
+            /* Build URL with query params — safest approach for Apps Script no-cors */
+            const params = new URLSearchParams({
+                faculty:    payload.faculty,
+                role:       payload.role,
+                department: payload.department,
+                status:     payload.status,
+                message:    payload.message,
+                timestamp:  payload.timestamp
+            });
+ 
+            /* 
+               Apps Script Web App with no-cors: response will be "opaque"
+               We treat any network success as a successful write.
+               Real failure = network error (catch block).
+            */
+            await fetch(SHEET_API_URL + "?" + params.toString(), {
+                method: "GET",
+                mode:   "no-cors"
+            });
+        }
+ 
+        /* ---- MAIN SUBMIT FUNCTION ---- */
+        async function commitRegistryTransmission() {
+            const evaluation  = document.querySelector('input[name="clearance-status"]:checked').value;
+            const textPayload = document.getElementById('transmission-input-box').value.trim();
+            const logClock    = new Date().toLocaleString('en-IN', {
+                day:'2-digit', month:'short', year:'numeric',
+                hour:'2-digit', minute:'2-digit', hour12:true
+            });
+ 
+            /* Save locally as backup */
+            try {
+                localStorage.setItem(`RegistryToken_${designatedFaculty}`, JSON.stringify({
+                    status: evaluation,
+                    note:   textPayload || "No message.",
+                    clock:  logClock
+                }));
+            } catch(e) {}
+ 
+            /* Disable button + show loading */
+            const submitBtn = document.querySelector('#modal-dynamic-injection button[onclick="commitRegistryTransmission()"]');
+            if (submitBtn) showLoadingState(submitBtn);
+ 
+            /* Prepare payload */
+            const payload = {
+                faculty:    designatedFaculty.trim(),
+                role:       designatedTag.trim(),
+                department: designatedDept.trim(),
+                status:     evaluation,
+                message:    textPayload || "—",
+                timestamp:  logClock
+            };
+ 
+            const targetBox = document.getElementById('modal-dynamic-injection');
+ 
+            try {
+                await sendToGoogleSheet(payload);
+ 
+                /* ---- SUCCESS UI ---- */
+                if (evaluation === 'Approved') {
+                    targetBox.innerHTML = `
+                        <div class="text-center space-y-5 py-4" style="animation:fadeInUp 0.6s ease forwards">
+                            <div style="width:56px;height:56px;background:rgba(16,185,129,0.1);color:#34d399;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;border:1px solid rgba(52,211,153,0.2);font-size:22px;">✓</div>
+                            <div class="space-y-1">
+                                <h3 class="serif-elite text-xl sm:text-2xl font-semibold text-white tracking-wide">Validation Acknowledged</h3>
+                                <p class="text-amber-500 font-mono text-[9px] tracking-widest uppercase">Secure Transmission Complete &bull; Logged to Registry</p>
+                            </div>
+                            <p class="literary-subtext text-slate-400 text-base max-w-md mx-auto leading-relaxed">
+                                Your invitation has been confirmed and recorded in our official registry. The entire graduating contingent stands ready to receive you at the venue.
+                            </p>
+                            <div style="background:rgba(2,6,23,0.5);border:1px solid rgba(51,65,85,1);border-radius:8px;padding:16px;text-align:left;">
+                                <p style="font-size:9px;text-transform:uppercase;font-weight:700;color:#f59e0b;letter-spacing:0.2em;font-family:'Plus Jakarta Sans',sans-serif;">[EVENT DETAILS]:</p>
+                                <div style="font-size:11px;color:#94a3b8;font-family:monospace;border-top:1px solid rgba(51,65,85,0.5);margin-top:8px;padding-top:8px;line-height:2;">
+                                    <p><span style="color:#475569;">• Event :</span> YAADEIN '26</p>
+                                    <p><span style="color:#475569;">• Date  :</span> 9th June 2026, Tuesday</p>
+                                    <p><span style="color:#475569;">• Venue :</span> AI&DS AV Hall, 1st Floor</p>
+                                    <p><span style="color:#475569;">• Lunch :</span> 02:00 PM – 03:00 PM</p>
+                                    <p><span style="color:#475569;">• Prog  :</span> 03:00 PM – 06:00 PM</p>
+                                </div>
+                            </div>
+                            <div style="background:rgba(16,185,129,0.04);border:1px solid rgba(52,211,153,0.1);border-radius:6px;padding:10px 14px;display:flex;align-items:center;gap:8px;">
+                                <span style="color:#34d399;font-size:11px;">●</span>
+                                <span style="font-size:10px;color:#64748b;font-family:monospace;">Response saved to Google Sheet &bull; ${logClock}</span>
+                            </div>
+                            <button onclick="dismissModal()" style="padding:10px 32px;border-radius:6px;background:rgba(30,41,59,1);border:none;color:#cbd5e1;cursor:pointer;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;transition:background 0.2s;font-family:'Plus Jakarta Sans',sans-serif;"
+                                onmouseover="this.style.background='rgba(51,65,85,1)'"
+                                onmouseout="this.style.background='rgba(30,41,59,1)'">Terminate Session</button>
+                        </div>`;
+                } else {
+                    targetBox.innerHTML = `
+                        <div class="text-center space-y-5 py-4" style="animation:fadeInUp 0.6s ease forwards">
+                            <div style="width:56px;height:56px;background:rgba(239,68,68,0.1);color:#f87171;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;border:1px solid rgba(248,113,113,0.2);font-size:18px;">✖</div>
+                            <div class="space-y-1">
+                                <h3 class="serif-elite text-xl sm:text-2xl font-semibold text-white tracking-wide">Absentia Protocol Authenticated</h3>
+                                <p class="text-rose-400 font-mono text-[9px] tracking-widest uppercase">Transmission Registered With Deepest Respect</p>
+                            </div>
+                            <p class="literary-subtext text-slate-400 text-base max-w-md mx-auto leading-relaxed">
+                                Respected Professor, your inability to interface with us physically is profoundly felt. However, your intellectual trajectory and blessings remain hardcoded into our professional futures.
+                            </p>
+                            <div style="background:rgba(2,6,23,0.4);border:1px solid rgba(51,65,85,0.7);border-radius:6px;padding:12px;font-size:10px;text-align:left;color:#64748b;font-family:monospace;">
+                                [System Notice]: Your credentials shall remain cleared inside the mainframe should your official schedule permit access configurations later.
+                            </div>
+                            <div style="background:rgba(16,185,129,0.04);border:1px solid rgba(52,211,153,0.1);border-radius:6px;padding:10px 14px;display:flex;align-items:center;gap:8px;">
+                                <span style="color:#34d399;font-size:11px;">●</span>
+                                <span style="font-size:10px;color:#64748b;font-family:monospace;">Response saved to Google Sheet &bull; ${logClock}</span>
+                            </div>
+                            <button onclick="dismissModal()" style="padding:10px 32px;border-radius:6px;background:rgba(30,41,59,1);border:none;color:#cbd5e1;cursor:pointer;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;transition:background 0.2s;font-family:'Plus Jakarta Sans',sans-serif;"
+                                onmouseover="this.style.background='rgba(51,65,85,1)'"
+                                onmouseout="this.style.background='rgba(30,41,59,1)'">Terminate Session</button>
+                        </div>`;
+                }
+ 
+            } catch (networkError) {
+                /* ---- NETWORK ERROR UI (still show success since no-cors can't confirm) ---- */
+                /* Re-enable form for retry */
+                targetBox.innerHTML = `
+                    <div class="text-center space-y-5 py-4" style="animation:fadeInUp 0.6s ease forwards">
+                        <div style="width:56px;height:56px;background:rgba(245,158,11,0.08);color:#f59e0b;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto;border:1px solid rgba(245,158,11,0.2);font-size:20px;">⚠</div>
+                        <div class="space-y-1">
+                            <h3 class="serif-elite text-xl font-semibold text-white tracking-wide">Network Anomaly Detected</h3>
+                            <p class="text-amber-500 font-mono text-[9px] tracking-widest uppercase">Transmission Interrupted &bull; Please Retry</p>
+                        </div>
+                        <p class="literary-subtext text-slate-400 text-base max-w-md mx-auto leading-relaxed">
+                            Your response was saved locally but could not reach our registry server. Please check your connection and try again.
+                        </p>
+                        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                            <button onclick="compileModalPayload()"
+                                style="padding:10px 24px;border-radius:6px;background:linear-gradient(135deg,#d97706,#f59e0b);color:#0c0a09;border:none;cursor:pointer;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;font-family:'Plus Jakarta Sans',sans-serif;">
+                                Retry Transmission
+                            </button>
+                            <button onclick="dismissModal()" style="padding:10px 24px;border-radius:6px;background:rgba(30,41,59,1);border:none;color:#cbd5e1;cursor:pointer;font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;font-family:'Plus Jakarta Sans',sans-serif;"
+                                onmouseover="this.style.background='rgba(51,65,85,1)'"
+                                onmouseout="this.style.background='rgba(30,41,59,1)'">Close</button>
+                        </div>
+                    </div>`;
+            }
+        }
+ 
+        /* ---- SCROLL REVEAL ---- */
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('reveal-active');
+            });
+        }, { threshold: 0.08 });
+ 
+        document.querySelectorAll('.enhanced-faculty-card').forEach(card => {
+            card.classList.add('reveal-on-scroll');
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
